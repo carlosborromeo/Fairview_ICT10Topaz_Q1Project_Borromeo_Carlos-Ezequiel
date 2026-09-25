@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://pyscript.net/releases/2025.3.1/core.css" />
+        <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
+
+
+        <!-- the font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+
+            html, body {
+
+                background-color: black;
+
+            }
+
+            #vcrScreen{
+
+                position: fixed;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgb(67, 67, 67)
+
+            }
+
+            #scanLines, #bezel {
+
+                position: fixed;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 2;
+
+            }
+
+            #scanLines {
+
+                opacity: 75%;
+                z-index: 1
+                
+            }
+
+            #content {
+
+                overflow-y: auto;
+                height: 100vh;
+                color: white;
+                text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+                text-align: center;
+                font-family: 'VT323';
+
+            }
+
+            .voidtekCheckbox {
+
+                height: 25px;
+                width: 25px;
+
+            }
+
+            .voidtekImageBox {
+
+                height: 400px;
+                width: 400px;
+
+            }
+
+            .button {
+
+              background-color: rgb(121, 121, 201);
+              font-family: 'VT323';
+              border: 3px solid black;
+              padding: 10px 20px;
+              box-shadow: 5px 5px black;
+              transition: 0.25s;
+              font-weight: bolder;
+              cursor: pointer;
+              color: white;
+              text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+
+            }
+
+            .button:hover {
+
+              background-color: rgb(77, 77, 255);
+              animation: shake 0.5s;
+              animation-iteration-count: infinite;
+
+            
+            }
+
+            .button:active {
+
+              box-shadow: 0px 0px black;
+              transform: translate(5px, 5px);
+
+            }
+
+            .buttonTransparent {
+
+              background-color: rgba(0,0,0,0);
+              font-family: 'VT323';
+              padding: 10px 20px;
+              transition: 0.25s;
+              font-weight: bolder;
+              cursor: pointer;
+              color: white;
+              text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+
+            }
+
+            .buttonTransparent:hover {
+
+              background-color: rgba(0,0,0,0.25);
+              animation: shake 0.5s;
+              animation-iteration-count: infinite;
+
+            
+            }
+
+            .buttonTransparent:active {
+
+              box-shadow: 0px 0px black;
+              transform: translate(5px, 5px);
+
+            }
+
+            img:hover {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            h1:hover {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            input:hover {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+            
+            label:hover {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            img:active {
+                animation: shake2 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            h1:active {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            input:active {
+                animation: shake 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+            
+            label:active {
+                animation: shake2 0.5s;
+
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes shake {
+                0% { transform: translate(1px, 1px) rotate(0deg); }
+                10% { transform: translate(-1px, -2px) rotate(-0.25deg); }
+                20% { transform: translate(-3px, 0px) rotate(0.25deg); }
+                30% { transform: translate(3px, 2px) rotate(0deg); }
+                40% { transform: translate(1px, -1px) rotate(0.25deg); }
+                50% { transform: translate(-1px, 2px) rotate(-0.25deg); }
+                60% { transform: translate(-3px, 1px) rotate(0deg); }
+                70% { transform: translate(3px, 1px) rotate(-0.25deg); }
+                80% { transform: translate(-1px, -1px) rotate(0.25deg); }
+                90% { transform: translate(1px, 2px) rotate(0deg); }
+                100% { transform: translate(1px, -2px) rotate(-0.25deg); }
+            }
+
+            @keyframes shake2 {
+                0% { transform: translate(1px, 1px) rotate(0deg); }
+                10% { transform: translate(-1px, -2px) rotate(-10deg); }
+                20% { transform: translate(-3px, 0px) rotate(10deg); }
+                30% { transform: translate(3px, 2px) rotate(0deg); }
+                40% { transform: translate(1px, -1px) rotate(10deg); }
+                50% { transform: translate(-1px, 2px) rotate(-3deg); }
+                60% { transform: translate(-3px, 1px) rotate(0deg); }
+                70% { transform: translate(3px, 1px) rotate(-10deg); }
+                80% { transform: translate(-1px, -1px) rotate(10deg); }
+                90% { transform: translate(1px, 2px) rotate(0deg); }
+                100% { transform: translate(1px, -2px) rotate(-10deg); }
+            }
+
+            .roundbord {
+
+                border-radius: 25px;
+                border: 2px dashed rgb(255, 255, 255);
+                box-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;;
+
+            }
+
+    </style>
+    
+    <title>Q1 Project</title>
+</head>
+<body>
+
+    <script type="py" src="main.py"></script>
+
+    <div id="vcrScreen">
+
+
+        <!-- scanlines -->
+        <img src="scanlines.png"id="scanLines">
+        <img src="bezel.png"id="bezel">
+
+        <div id="content">
+
+            <h1 style="font-size: 150px; padding-top: 70px;">voidtek</h1>
+
+            <div style="text-align: right; padding-right: 250px; margin-top: -115px;">
+
+                <button type="submit" style="font-size: 30px;" class="buttonTransparent roundbord" onclick="window.location.href = 'skupage.html'">go to sku generator</button>
+
+            </div>
+
+            <br><br>
+
+            <h2 class="roundbord"></h2>
+
+            <form action="">
+
+                <div class="container-fluid">
+                    
+                    <!-- basically just a styled form -->
+                    <div class="card-body">
+
+                        <br><br><br>
+
+                        <h1 style="font-size: 50px;" class="container roundbord">TOP RATED MICE</h1>
+
+                        <br><br><br>
+
+                        <br><br>
+
+                        <div class="row">
+
+                        <div class="col-md-4">
+
+                            <img class="voidtekImageBox" src="LMXM4.jpg">
+
+                        <br>
+
+                        <h1>₱7,995</h1>
+
+                        <input type="checkbox" id="LMXM4" value="7995" class="voidtekCheckbox">
+                        <label for="LMXM4" id="label" style="font-size: 50px;">Logitech MX Master 4</label>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <img class="voidtekImageBox" src="LMXM3S.png">
+
+                        <br>
+
+                        <h1>₱6,995</h1>
+
+                        <input type="checkbox" id="LMXM3S" value="6995" class="voidtekCheckbox">
+                        <label for="LMXM3S" id="label" style="font-size: 50px;">Logitech MX Master 3S</label>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <img class="voidtekImageBox" src="RBV3.png">
+
+                        <br>
+
+                        <h1>₱5,995</h1>
+
+                        <input type="checkbox" id="RBV3" value="5995" class="voidtekCheckbox">
+                        <label for="RBV3" id="label" style="font-size: 50px;">Razer Basilisk V3</label>
+                        </div>
+
+                        </div>
+
+                        <br><br><br><br><br><br>
+                        
+                        <h2 class="roundbord"></h2>
+                        
+                        <br><br><br>
+
+                        <h1 style="font-size: 50px;" class="container roundbord">TOP RATED CASES</h1>
+
+                        <br><br><br><br><br><br>
+
+                        <div class="row">
+
+                        <div class="col-md-4">
+
+                            <img class="voidtekImageBox" src="CA5400.webp">
+
+                        <br>
+
+                        <h1>₱10,995</h1>
+
+                        <input type="checkbox" id="CA5400" value="10995" class="voidtekCheckbox">
+                        <label for="CA5400" id="label" style="font-size: 50px;">Corsair Air 5400</label>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <img class="voidtekImageBox" src="TV380.jpg">
+
+                        <br>
+
+                        <h1>₱9,995</h1>
+
+                        <input type="checkbox" id="TV380" value="9995" class="voidtekCheckbox">
+                        <label for="TV380" id="label" style="font-size: 50px;">Thermaltake View 380</label>
+                        </div>
+
+                        <div class="col-md-4" style="padding-bottom: 150px;">
+
+                            <img class="voidtekImageBox" src="FDT.png">
+
+                        <br>
+
+                        <h1>₱9,995</h1>
+
+                        <input type="checkbox" id="FDT" value="9995" class="voidtekCheckbox">
+                        <label for="FDT" id="label" style="font-size: 50px;">Fractal Design Terra</label>
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                            <!-- cool button which i also used before -->
+                            <button type="button" py-click="placeOrder" style="font-size: 50px; margin-bottom: 150px;" class="button">place order</button>
+
+                        </div>
+
+                    </div>
+
+                    <h1 id="textOut" style="padding-bottom: 200px;"></h1>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
