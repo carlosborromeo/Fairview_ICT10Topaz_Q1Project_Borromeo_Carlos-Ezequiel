@@ -53,12 +53,12 @@ def placeOrder(e): # just variable-ing
 
 def genSKU(e):
     document.getElementById('displaySKU').innerHTML = "" # clear div
-    prodCategory = document.getElementById('prodCat').value
-    prodName = document.getElementById('prodNm').value.strip()
-    prodQty = document.getElementById('prodStock').value.strip()
+    prodCategory = document.getElementById('prodCat').value # make prodCategory variable and get value
+    prodName = document.getElementById('prodNm').value.strip() # make prodName variable, get value, and remove excess spaces
+    prodQty = document.getElementById('prodStock').value.strip() # make prodQty variable, get value, and remove excess spaces
     SKUname = (prodCategory.upper() + "XXX")[:3] + "-" + (prodName.upper() + "XXXX")[:4] + "-" + (prodQty.zfill(4)[:4] if prodQty else 0.0)
     # okay so  get first 3 letters of category,  | add "-" then get first 4 letters       |    add "-" then put quantity and add zeroes
     # (triple x is the fallback in case its not  |         (XXXX is the fallback here)    |            before to make sure its four
     # three letters for any reason)              |                                        |            digits
 
-    display("generated sku: ", SKUname, target='displaySKU')
+    display("generated sku: ", SKUname, target='displaySKU') # yayayayyy displayy
